@@ -1,0 +1,51 @@
+                {% if not user.is_authenticated %}
+
+                <li id="SignIn" class="dropdown rightdrop margin-right">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <p class="toBold">Sign In<span class="caret"></span></p></a>
+                    <ul id="login-dp" class="dropdown-menu rightdrop">
+                        <li>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="toBold margin-left">Login Via</p>
+                                    <div class="social-buttons">
+                                        <a id="fb-login" href="{% url 'social:begin' 'facebook' %}" class="btn btn-fb">
+                                            <i class="fa fa-facebook"></i>
+                                            Facebook
+                                        </a>
+                                        <a id='tw-login' href="{% url 'social:begin' 'twitter' %}" class="btn btn-tw">
+                                            <i class="fa fa-twitter"></i>
+                                            Twitter
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+                {% else %}
+
+                <li class="dropdown rightdrop margin-right">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <p class="toBold">
+                            <!-- This if block is so logins from social media display the user's name -->
+                            {% if user.first_name and user.last_name %}
+                                {{ user.first_name }} {{ user.last_name }}
+                            {% else %}
+                                {{ user.username }}
+                            {% endif %}
+                        <span class="caret"></span></p></a>
+                    <ul id='userStats' class="dropdown-menu rightdrop">
+                        <li>
+                            <p>You have saved <span class="toBold">100 pounds of CO2</span></p>
+                            <div class="bottom text-center">
+                                <a href="#"><p class="toBold">User Settings</p></a>
+                                <a href="{% url 'user_logout' %}"><p class="toBold">Logout</p></a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+                {% endif %}

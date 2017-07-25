@@ -1,14 +1,69 @@
 <!DOCTYPE html>
 {% load render_bundle from webpack_loader %}
+{% load static %}
 
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>FreeToday</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "style/style.css" %}">
+    <link rel="icon" href="{% static "images/favicon.ico" %} " type=image/x-icon">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
 </head>
+
 <body>
-    Hi
-    <div id="react-app">
+    <nav id="myNavbar" class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div id="myNavbarBrand">
+                <a href={% url 'home' %}><p class="navbar-text">FreeToday</p></a>
+            </div>
+            <ul class="nav navbar-nav navbar-left">
+                <li><a class="nav-link" href="#">About<span class="sr-only">(current)</span></a></li>
+                <li></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+
+                {% if not user.is_authenticated %}
+                <li>
+                    <a id="fb-login" href="{% url 'social:begin' 'facebook' %}" class="btn btn-fb">
+                        <i class="fa fa-facebook"></i>
+                        Facebook
+                    </a>
+                </li>
+                <li class="margin-right">
+                    <a id='tw-login' href="{% url 'social:begin' 'twitter' %}" class="btn btn-tw">
+                        <i class="fa fa-twitter"></i>
+                        Twitter
+                    </a>
+                </li>
+
+                {% else %}
+                <li id="sign-out">
+                    <a href="{% url 'user_logout' %}"><p class="toBold">Logout</p></a>
+                </li>
+
+                <li id="current-user" class="margin-right">
+                    {% if user.first_name and user.last_name %}
+                        {{ user.first_name }} {{ user.last_name }}
+                    {% else %}
+                        {{ user.username }}
+                    {% endif %}
+                </li>
+
+                {% endif %}
+
+			</ul>
+		</div>
+	</nav>
+
+    <div class="container-fluid" id="container">
         {% render_bundle 'main' %}
     </div>
 </body>

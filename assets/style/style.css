@@ -1,0 +1,28 @@
+body {
+	text-align: center;
+	font-family: "Zilla Slab", serif;
+}
+
+#myNavbar {
+	height: 20px;
+	border-radius: 0px;
+}
+
+#myNavbarBrand {
+	font-size: 24px;
+	line-height: 70%;
+}
+
+#current-user {
+	font-size: 24px;
+	color: #9D9D9D;
+	margin-top: 5px;
+}
+
+.toBold {
+	font-weight: bold;
+}
+
+.margin-right {
+	margin-right: 20px;
+}
