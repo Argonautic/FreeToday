@@ -14,6 +14,8 @@ module.exports = {
         filename: '[name]-[hash].js'
     },
 
+    devtool: 'eval-source-map',
+
     plugins: [
         // tells webpack where to store data about your bundle
         new BundleTracker({
@@ -29,7 +31,12 @@ module.exports = {
     module: {
         rules: [
             {
-                use: 'babel-loader',
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {sourceMap: true},
+                    }
+                ],
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
             }

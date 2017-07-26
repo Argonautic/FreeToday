@@ -6,7 +6,7 @@ from login import views as login_views
 schema_view = get_schema_view(title='Pastebin API')
 
 urlpatterns = [
-    url(r'^schema', schema_view),
+    url(r'^schema/', schema_view),
     url(r'^admin', admin.site.urls),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^user_login', login_views.user_login, name='user_login'),
