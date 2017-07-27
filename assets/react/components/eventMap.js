@@ -1,3 +1,25 @@
+import React, { Component } from 'react';
+import MapComponent from 'react-cartographer/lib/components/Map';
+
+export default class EventMap extends Component {
+
+    componentDidMount() {
+        new Microsoft.Maps.Map(this.refs.myMap, {
+            credentials: "PRFTi9mupSSNsa7uQUTh~DBPubrOdnxhjiCLOBD6elg~AmTRtpx-UR0OCI649C-g308vzcjGRvRPfworiJguphqL-GiS7Y15anJBTQgqgAps"
+        });
+    }
+
+    render() {
+
+        return (
+            <MapComponent
+                id="myMap"
+                ref="myMap"
+            />
+        )
+    }
+}
+
 // /* global google */
 // import _ from "lodash";
 //
