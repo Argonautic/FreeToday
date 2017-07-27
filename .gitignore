@@ -3,3 +3,4 @@ main.js
 npm-debug.log
 .DS_Store
 localfiles.py
+BingAPIKey.js
