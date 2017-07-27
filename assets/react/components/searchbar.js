@@ -18,7 +18,7 @@ class SearchBar extends Component {
         event.preventDefault();
 
         //this.props.fetchEvents(this.state.searchTerm);
-        this.props.fetchEvents().then(() => console.log(this.props.events));
+        this.props.fetchEvents();
         this.setState({ searchTerm: '' });
     }
 
