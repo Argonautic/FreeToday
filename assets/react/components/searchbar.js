@@ -17,20 +17,18 @@ class SearchBar extends Component {
     onFormSubmit(event) {
         event.preventDefault();
 
-        //this.props.fetchEvents(this.state.term);
-        this.props.fetchEvents();
-        console.log(this.props.events);
-        this.setState({ term: '' });
+        //this.props.fetchEvents(this.state.searchTerm);
+        this.props.fetchEvents().then(() => console.log(this.props.events));
+        this.setState({ searchTerm: '' });
     }
 
     onInputChange(event) {
-        if (!event) { return; }
-
         this.setState({ searchTerm: event.target.value });
     }
 
     render() {
         return (
+            <div id="searchbar">
             <form onSubmit={this.onFormSubmit} className="input-group">
                 <input
                     placeholder="Pick your neighborhood"
@@ -41,6 +39,7 @@ class SearchBar extends Component {
                     <button type="submit" className="btn btn-secondary">Go!</button>
                 </span>
             </form>
+            </div>
         );
     }
 }

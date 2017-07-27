@@ -1,20 +1,20 @@
 from django.db import models
-import datetime
+from datetime import datetime, timedelta
 
 def oneHourFromNow():
-    return datetime.datetime.now() + datetime.timedelta(hours=1)
+    return datetime.now() + timedelta(hours=2)
 
 class Event(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
-    startDate = models.DateTimeField(default=datetime.datetime.now())
-    endDate = models.DateTimeField(default=(oneHourFromNow()))
+    start_date = models.DateTimeField(default=datetime.now())
+    end_date = models.DateTimeField(default=(oneHourFromNow()))
     lat = models.DecimalField(max_digits=9, decimal_places=6)
     lon = models.DecimalField(max_digits=9, decimal_places=6)
     owner = models.ForeignKey('auth.User', related_name='events', on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ('startDate',)
+        ordering = ('start_date',)
 
     def __str__(self):
         return self.name

@@ -1,11 +1,22 @@
 body {
 	text-align: center;
 	font-family: "Zilla Slab", serif;
+    position: fixed;
+    height: 100%;
+    width: 100%;
 }
 
 #myNavbar {
 	height: 20px;
 	border-radius: 0px;
+    border: 0px;
+    margin-bottom: 0px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#myNavbarContents {
+    height: 100%;
 }
 
 #myNavbarBrand {
@@ -25,4 +36,26 @@ body {
 
 .margin-right {
 	margin-right: 20px;
+}
+
+#container {
+    height: 100%;
+}
+
+[data-reactroot] {
+    height: 100%;
+}
+
+#searchbar {
+    width: 30%;
+    display: inline-block;
+    text-align: center;
+    margin-right: -50px;
+}
+
+#myMap {
+    height: 100%;
+    width: 80%;
+    margin-left: -15px;
+    margin-top: -6px;
 }

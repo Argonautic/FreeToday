@@ -13,13 +13,22 @@
     <link rel="stylesheet" href="{% static "style/style.css" %}">
     <link rel="icon" href="{% static "images/favicon.ico" %} " type=image/x-icon">
 
-    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBElxCXtmCPYXM9I9r4838G3sN0U86J6I0"></script>-->
+    <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
+
+    <script type="text/javascript">
+        function GetMap() {
+            const map = new Microsoft.Maps.Map('#myMap', {
+            credentials: "PRFTi9mupSSNsa7uQUTh~DBPubrOdnxhjiCLOBD6elg~AmTRtpx-UR0OCI649C-g308vzcjGRvRPfworiJguphqL-GiS7Y15anJBTQgqgAps"
+            });
+        }
+    </script>
 </head>
 
 <body>
     <nav id="myNavbar" class="navbar navbar-inverse" role="navigation">
-        <div class="container-fluid">
+        <div id="myNavbarContents" class="container-fluid">
             <div id="myNavbarBrand">
                 <a href={% url 'home' %}><p class="navbar-text">FreeToday</p></a>
             </div>
