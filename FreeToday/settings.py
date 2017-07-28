@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'eventMap',
     'login',
+    'oauth2_provider',
     'social_django',
+    'rest_framework_social_oauth2',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -155,5 +158,15 @@ SERVER_EMAIL = EMAIL_HOST_USER
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
+    'rest_framework_social_oauth2.backends.DjangoOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_social_oauth2.authentication.SocialAuthentication',
+    )
+}
+

@@ -9,8 +9,8 @@ class Event(models.Model):
     description = models.TextField()
     start_date = models.DateTimeField(default=datetime.now())
     end_date = models.DateTimeField(default=(oneHourFromNow()))
-    lat = models.DecimalField(max_digits=9, decimal_places=6)
-    lon = models.DecimalField(max_digits=9, decimal_places=6)
+    lat = models.DecimalField(max_digits=20, decimal_places=17)
+    lon = models.DecimalField(max_digits=20, decimal_places=17)
     owner = models.ForeignKey('auth.User', related_name='events', on_delete=models.CASCADE)
 
     class Meta:
