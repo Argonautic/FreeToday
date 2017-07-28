@@ -2,55 +2,54 @@ import React, { Component } from 'react';
 import API_KEY from '../BingAPIKey'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createEvent } from '../actions/index'
-
-function getCookie(name)
-{
-    var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-
-            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-
-$.ajaxSetup({
-     beforeSend: function(xhr, settings) {
-         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-             // Only send the token to relative URLs i.e. locally.
-             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-         }
-     }
-});
+import { createEvent, fetchEvents } from '../actions/index'
 
 class EventMap extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
+
+        this.infobox;
+        this.map;
+
+        this.props.fetchEvents();
+    }
+
+    prepareEvent(location) {
+        let newPinOptions = {
+            title: 'Your New Event!',
+            subTitle: 'General Event',
+            color: 'green'
+        };
+
+        let newPin = new Microsoft.Maps.Pushpin(location, newPinOptions);
+        this.map.entities.push(newPin);
+
+        this.infobox.setOptions({
+            location,
+            visible: true,
+            title: "Your New Event!",
+            description: "Your Event Description Here",
+            actions: [{
+                label: "I'm in!",
+                eventHandler: () => this.props.createEvent(location, infobox),
+            }, {
+                label: "Message host",
+                eventHandler: () => console.log('Message host'),
+            }]
+        });
     }
 
     componentDidMount() {
-        const map = new Microsoft.Maps.Map(this.refs.myMap, {
+        this.props.fetchEvents().then(() => console.log(this.props.events));
+
+        this.map = new Microsoft.Maps.Map(this.refs.myMap, {
             credentials: API_KEY
         });
 
-        const center = map.getCenter();
+        const center = this.map.getCenter();
 
-        let pin = new Microsoft.Maps.Pushpin(center, {
-            title: 'Microsoft',
-            subTitle: 'City Center',
-            color: 'red',
-        });
-
-        let infobox = new Microsoft.Maps.Infobox(center, {
+        this.infobox = new Microsoft.Maps.Infobox(center, {
             visible: false,
             title: 'Map Center',
             description: 'Your Center',
@@ -62,15 +61,26 @@ class EventMap extends Component {
                 eventHandler: () => console.log('Message host'),
             }]
         });
+        this.infobox.setMap(this.map);
 
-        infobox.setMap(map);
-        map.entities.push(pin);
+        Microsoft.Maps.Events.addHandler(this.map, 'click', (event) => (this.prepareEvent(event.location)));
 
-        Microsoft.Maps.Events.addHandler(map, 'click', (event) => (createEvent(map, event.location, infobox)));
+        /*this.props.fetchEvents().then(() => {
+            for (let i = 0; i < this.props.events.length; i++) {
+                event = this.props.event[i];
+                location = new Microsoft.Maps.Location(events.lat, events.lon);
+                let newPinOptions = {
+                    title: 'Your New Event!',
+                    subTitle: 'General Event',
+                    color: 'green'
+                };
+                let newPin = new Microsoft.Maps.Pushpin(location, newPinOptions);
+                this.map.entities.push(newPin);
+            }
+        });*/
     }
 
     render() {
-        console.log(this.props.events);
         return (
             <div
                 id="myMap"
@@ -85,7 +95,7 @@ function mapStateToProps({ events }) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ createEvent }, dispatch)
+    return bindActionCreators({ createEvent, fetchEvents }, dispatch)
 }
 
-export default connect(mapStateToProps)(EventMap)
+export default connect(mapStateToProps, mapDispatchToProps)(EventMap)
